@@ -3,4 +3,15 @@
 {% block content %}
 <h1>변방조의 영화 일기</h1>
 
+{% for movie in movies %}
+<div class="card">
+  <h5 class="card-header">{{ movie.title }}</h5>
+  <div class="card-body">
+    <p class="card-text">{{ movie.content }}</p>
+    <a href="#" class="btn btn-primary">좋아요</a>
+    <a href="#" class="btn btn-primary">싫어요</a>
+  </div>
+</div>
+{% endfor %}
+  
 {% endblock content %}
