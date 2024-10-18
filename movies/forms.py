@@ -4,9 +4,9 @@ from .models import Movie, Comment
 class MovieForm(forms.ModelForm):
     class Meta:
         model = Movie
-        fields = '__all__'
+        fields = ('title', 'content')
 
 class CommentForm(forms.Form):
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = ('comment', )
