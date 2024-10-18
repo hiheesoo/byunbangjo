@@ -12,6 +12,7 @@ class Movie(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class Comment(models.Model):
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     comment = models.TextField()
     c_author = models.TextField()
     movieinfos = models.TextField()
