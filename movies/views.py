@@ -51,7 +51,7 @@ def dislikes(request, movie_pk):
     else:
         movie.dislike_users.add(request.user)
     return redirect('movies:index')
-
+  
 @login_required
 def update(request, movie_pk):
     movie = Movie.objects.get(pk=movie_pk)
@@ -100,3 +100,4 @@ def comments_delete(request, movie_pk, comment_pk):
     if request.user == comment.user:
         comment.delete()
     return redirect('movies:detail', movie_pk)
+
