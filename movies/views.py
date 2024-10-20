@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Movie, Comment
 from .forms import MovieForm, CommentForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
@@ -10,12 +11,7 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
-from .forms import MovieForm
-
-# Create your views here.
-def index(request):
-    return render(request, 'index.html')
-
+@login_required
 def create(request):
     if request.method == 'POST':
         form = MovieForm(request.POST)
@@ -31,5 +27,27 @@ def create(request):
     }
     return render(request, 'create.html', context)
 
-def detail(reqeust, movie_pk):
-    pass
+def detail(request, movie_pk):
+    movie = Movie.objects.get(pk=movie_pk)
+    context = {
+        'movie': movie
+    }
+    return render(request, 'detail.html', context)
+
+@login_required
+def likes(request, movie_pk):
+    movie = Movie.objects.get(pk=movie_pk)
+    if request.user in movie.like_users.all():
+        movie.like_users.remove(request.user)
+    else:
+        movie.like_users.add(request.user)
+    return redirect('movies:index')
+
+@login_required
+def dislikes(request, movie_pk):
+    movie = Movie.objects.get(pk=movie_pk)
+    if request.user in movie.dislike_users.all():
+        movie.dislike_users.remove(request.user)
+    else:
+        movie.dislike_users.add(request.user)
+    return redirect('movies:index')
