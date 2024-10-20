@@ -6,7 +6,7 @@ class MovieForm(forms.ModelForm):
         model = Movie
         fields = ('title', 'content')
 
-class CommentForm(forms.Form):
+class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('comment', )
