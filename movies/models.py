@@ -14,5 +14,5 @@ class Movie(models.Model):
 
 class Comment(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    comment = models.TextField()
+    comment = models.CharField(max_length=150)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

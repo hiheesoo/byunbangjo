@@ -29,8 +29,12 @@ def create(request):
 
 def detail(request, movie_pk):
     movie = Movie.objects.get(pk=movie_pk)
+    comment_form = CommentForm()
+    comments = Comment.objects.filter(movie=movie_pk)
     context = {
-        'movie': movie
+        'movie': movie,
+        'comments': comments,
+        'comment_form': comment_form,
     }
     return render(request, 'detail.html', context)
 
