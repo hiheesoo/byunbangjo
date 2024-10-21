@@ -1,37 +1,41 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 class='my-3'>변방조의 영화 일기</h1>
+<h1 class='my-3 text-center'>변방조의 영화 여행</h1>
 
 {% if movies %}
+<div class="row justify-content-around">
   {% for movie in movies %}
-  <div class="card mt-3">
-    <h5 class="card-header">{{ movie.title }}</h5>
-    <div class="card-body">
-      <p class="card-text">{{ movie.content }}</p>
-      <div class="d-flex justify-content-end">
-        <a href="{% url "movies:detail" movie.pk %}" class='btn btn-secondary me-2'>상세 페이지</a>
-        <form action="{% url "movies:likes" movie.pk %}" method='POST'>
-          {% csrf_token %}
-          {% if request.user in movie.like_users.all %}
-            <input type="submit" value="좋아요 취소" class="btn btn-primary me-2">
-          {% else %}
-            <input type="submit" value="좋아요" class="btn btn-primary me-2">
-          {% endif %}
-        </form>
-        <form action="{% url "movies:dislikes" movie.pk %}">
-          {% csrf_token %}
-          {% if request.user in movie.dislike_users.all %}
-            <input type="submit" value="싫어요 취소" class="btn btn-primary">
-          {% else %}
-            <input type="submit" value="싫어요" class="btn btn-primary">
-          {% endif %}
-        </form>
+    <div class="card mt-3 col-lg-5 px-0">
+      <h5 class="card-header">{{ movie.title }}</h5>
+      <div class="card-body">
+        <p class="card-text">{{ movie.content }}</p>
+        <div class="d-flex justify-content-end">
+          <a href="{% url "movies:detail" movie.pk %}" class='btn btn-secondary me-2'>상세 페이지</a>
+          <form action="{% url "movies:likes" movie.pk %}" method='POST'>
+            {% csrf_token %}
+            {% if request.user in movie.like_users.all %}
+              <input type="submit" value="좋아요 취소" class="btn btn-primary me-2">
+            {% else %}
+              <input type="submit" value="좋아요" class="btn btn-primary me-2">
+            {% endif %}
+          </form>
+          <form action="{% url "movies:dislikes" movie.pk %}">
+            {% csrf_token %}
+            {% if request.user in movie.dislike_users.all %}
+              <input type="submit" value="싫어요 취소" class="btn btn-primary">
+            {% else %}
+              <input type="submit" value="싫어요" class="btn btn-primary">
+            {% endif %}
+          </form>
+        </div>
       </div>
     </div>
-  </div>
   {% endfor %}
+</div>
 {% else %}
-  <a href="{% url 'movies:create' %}" class='btn btn-primary'>영화 기록하러 가기</a>
+<div class='position-relative mt-5'>
+  <a href="{% url 'movies:create' %}" class='btn btn-primary position-absolute top-50 start-50 translate-middle'>영화 기록하러 가기</a>
+</div>
 {% endif %}  
 {% endblock content %}
